@@ -1,0 +1,42 @@
+{
+    "skinWeights": [], 
+    "vertices": [-4.49488, -3.32368, 3.36921, -4.49488, -3.32368, 3.15214, -1.80234, -3.32368, 3.15214, -1.80234, -3.32368, 3.36921, -4.49488, 0.550449, 3.36921, -4.49488, 0.550449, 3.15214, -1.80234, 0.550449, 3.15214, -1.80234, 0.550449, 3.36921], 
+    "uvs": [[0, 0, 0.560668, 0.209091, 0.499797, 0.209091, 0.499797, 0.115128, 0.560668, 0.115128]], 
+    "materials": [{
+        "colorEmissive": [0, 0, 0], 
+        "mapDiffuseRepeat": [1, 1], 
+        "opacity": 1, 
+        "colorAmbient": [0.64, 0.64, 0.64], 
+        "DbgIndex": 0, 
+        "colorSpecular": [0.5, 0.5, 0.5], 
+        "blending": "NormalBlending", 
+        "visible": true, 
+        "specularCoef": 50, 
+        "wireframe": false, 
+        "transparent": false, 
+        "mapDiffuseWrap": ["RepeatWrapping", "RepeatWrapping"], 
+        "mapDiffuseAnisotropy": 1, 
+        "depthTest": true, 
+        "shading": "phong", 
+        "DbgColor": 15658734, 
+        "DbgName": "Material.001", 
+        "depthWrite": true, 
+        "mapDiffuse": "home.jpg", 
+        "colorDiffuse": [0.64, 0.64, 0.64]
+    }], 
+    "name": "Cube.001Geometry.4", 
+    "normals": [-0.577349, -0.577349, -0.577349, -0.577349, -0.577349, 0.577349, -0.577349, 0.577349, 0.577349, -0.577349, 0.577349, -0.577349, 0.577349, 0.577349, -0.577349, 0.577349, -0.577349, -0.577349, 0.577349, 0.577349, 0.577349, 0.577349, -0.577349, 0.577349], 
+    "influencesPerVertex": 2, 
+    "metadata": {
+        "faces": 6, 
+        "version": 3, 
+        "generator": "io_three", 
+        "vertices": 8, 
+        "uvs": 1, 
+        "normals": 8, 
+        "type": "Geometry", 
+        "materials": 1
+    }, 
+    "faces": [43, 1, 0, 4, 5, 0, 0, 0, 0, 0, 0, 1, 2, 3, 43, 5, 6, 2, 1, 0, 0, 0, 0, 0, 3, 4, 5, 0, 43, 6, 7, 3, 2, 0, 0, 0, 0, 0, 4, 6, 7, 5, 43, 0, 3, 7, 4, 0, 3, 4, 1, 2, 1, 7, 6, 2, 43, 0, 1, 2, 3, 0, 0, 0, 0, 0, 1, 0, 5, 7, 43, 7, 6, 5, 4, 0, 0, 0, 0, 0, 6, 4, 3, 2], 
+    "skinIndices": []
+}

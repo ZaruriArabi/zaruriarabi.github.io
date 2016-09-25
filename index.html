@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+        <meta charset="utf-8">
+	<title>Zaruri Arabi 3D</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+
+
+        <script src="js/Threeold.js"></script>
+        <!-- <script src="js/Three.js"></script> -->
+        
+        <!-- not now -->
+        <!-- <script src="js/find-in-json.js"></script> -->
+
+        <script src="js/genbasic.js"></script>
+        <script src="js/day.js"></script>
+        <script src="js/cannon.js"></script>
+        <script src="js/CannonDebugRenderer.js"></script>
+        <script src="js/PointerLockControls.js"></script>
+        <!-- <script src="js/VoxelLandscape.js"></script> -->
+		<script src="js/SubdivisionModifier.js"></script>
+		<!-- <script src="js/msgpack-js.js"></script> -->
+
+
+		<div id="cursor"><img src="images/cur.png" width="30px"></div>
+        <div id="blocker">
+
+            <div id="instructions">
+                <span style="font-size:24px">Zaruri Arabi</span>
+                <br />
+                <br />
+                <br />
+                <br />
+                <span id="startbtn" style="font-family: Arial; font-size:40px; padding:10px 14px;border-radius:3px;">Learn 
+                <img src="images/start.png" width="30px"> </span>
+                <br />
+                <br />
+                <br />
+                <br />
+                <img src="images/arrow.png" width="80%">
+            </div>
+
+        </div>
+
+
+<script type="text/javascript">
+	// Settings
+
+	// settings = {
+	// 	fullscreen:true,
+	//  pointerlock:true,
+	// }
+
+
+	// Debug Settings
+
+	settings = {
+		fullscreen:false,
+		pointerlock:true,
+	}
+</script>
+
+<!-- 
+<script type="x-shader/x-vertex" id="skyvertexShader">
+    varying vec3 vWorldPosition;
+    void main() {
+        vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+        vWorldPosition = worldPosition.xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="skyfragmentShader">
+    uniform vec3 topColor;
+    uniform vec3 bottomColor;
+    uniform float offset;
+    uniform float exponent;
+    varying vec3 vWorldPosition;
+    void main() {
+        float h = normalize( vWorldPosition + offset ).y;
+        gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+    }
+</script> -->
+<!-- 
+<script type="application/x-glsl" id="sky-vertex">  
+varying vec2 vUV;
+
+void main() {  
+  vUV = uv;
+  vec4 pos = vec4(position, 1.0);
+  gl_Position = projectionMatrix * modelViewMatrix * pos;
+}
+</script>
+
+<script type="application/x-glsl" id="sky-fragment">  
+uniform sampler2D texture;  
+varying vec2 vUV;
+
+void main() {  
+  vec4 sample = texture2D(texture, vUV);
+  gl_FragColor = vec4(sample.xyz, sample.w);
+}
+</script>  --> 
+
+
+        <script type="x-shader/x-vertex" id="sunvertexShader">
+
+            varying vec3 vWorldPosition;
+
+            void main() {
+
+                vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+                vWorldPosition = worldPosition.xyz;
+
+                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+            }
+
+        </script>
+
+        <script type="x-shader/x-fragment" id="sunfragmentShader">
+        // I quite like the day night cycle in http://webgl.steins-aperture.fr/
+        // even though it was quite primitive. I later tried this simple sky shader
+        // found on this gamedev thread.
+        // http://www.gamedev.net/topic/538429-day--night-cycle-sky-shader-for-you/
+
+            uniform vec3 sunPosition;
+
+            varying vec3 vWorldPosition;
+
+            vec4 zenith = vec4( 0.00, 0.34, 0.71, 0.00 );
+            vec4 horizon = vec4( 0.70, 0.40, 0.20, 0.00 );
+            vec4 night = vec4( 0.00, 0.034, 0.071, 0.00 );
+
+            void main() {
+
+
+                vec3 sky = normalize( vWorldPosition );
+                vec3 sun = normalize( sunPosition );
+                vec3 top = vec3(0.0, 1.0, 0.0);
+                float sunDot = dot(sky, sun);
+
+                float curve = 0.25 * (2.0 - sun.y);
+
+
+                // Sun
+                float light = 0.8 * pow( max(0.0001, sunDot), 360.0 );
+
+                // moon
+                // float light  = 0.3 * pow( max(0.0, dot(-sun, sky)), 60.0 );
+
+                vec4 skyColor = zenith * (1.-curve) + horizon * curve;
+                skyColor = skyColor * (1. + sunDot) + zenith * -sunDot;
+                skyColor = clamp(skyColor, 0.0, sun.y + 2.);
+                // satursate
+
+                gl_FragColor = vec4( skyColor.xyz, 1.0 );
+
+
+            }
+
+        </script>
+
+<script id="vertexShader" type="x-shader/x-vertex">
+uniform vec3 viewVector;
+uniform float c;
+uniform float p;
+varying float intensity;
+void main() 
+{
+    vec3 vNormal = normalize( normalMatrix * normal );
+	vec3 vNormel = normalize( normalMatrix * viewVector );
+	intensity = pow( c - dot(vNormal, vNormel), p );
+	
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}
+</script>
+
+<!-- fragment shader a.k.a. pixel shader -->
+<script id="fragmentShader" type="x-shader/x-vertex"> 
+uniform vec3 glowColor;
+varying float intensity;
+void main() 
+{
+	vec3 glow = glowColor * intensity;
+    gl_FragColor = vec4( glow, 1.0 );
+}
+</script>
+
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
